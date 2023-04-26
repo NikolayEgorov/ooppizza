@@ -1,6 +1,6 @@
-using collections.Models;
+using pizza.Models;
 
-namespace collections.ViewModels.Users {
+namespace pizza.ViewModels.Users {
     public class UpdateViewModels {
         public User user;
 

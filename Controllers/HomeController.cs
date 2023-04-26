@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using collections.Models;
+using pizza.Models;
 
-namespace collections.Controllers;
+namespace pizza.Controllers;
 
 public class HomeController : Controller
 {

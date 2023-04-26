@@ -1,4 +1,4 @@
-namespace collections.Enums
+namespace pizza.Enums
 {
     public class SortingEnum
     {

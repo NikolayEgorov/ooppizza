@@ -1,5 +1,5 @@
-using collections.Interfaces;
-using collections.Mocks;
+using pizza.Interfaces;
+using pizza.Mocks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IUsers, MockUsers>();
 
 var app = builder.Build();
-app.UsePathBase("/home/mykola/dotNetProjects/collections");
+app.UsePathBase("/home/mykola/dotNetProjects/oizza");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

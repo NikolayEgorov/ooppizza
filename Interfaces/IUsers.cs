@@ -1,7 +1,7 @@
-using collections.Models;
-using collections.Enums;
+using pizza.Models;
+using pizza.Enums;
 
-namespace collections.Interfaces
+namespace pizza.Interfaces
 {
     public interface IUsers
     {

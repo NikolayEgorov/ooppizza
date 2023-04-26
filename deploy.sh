@@ -1,10 +1,18 @@
 #!/bin/bash
 
 eval `ssh-agent -s`
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_ed25519
 
-PROJECTS_PATH="/home/mykola/dotNetProjects"
-PROJECT_NAME="collections"
+PROJECTS_PATH="";
+PROJECT_NAME="";
+
+while getopts p:n: flag
+do
+    case "${flag}" in
+        p) PROJECTS_PATH=${OPTARG};;
+        n) PROJECT_NAME=${OPTARG};;
+    esac
+done
 
 echo 'updating project...'
 

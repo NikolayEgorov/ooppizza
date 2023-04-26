@@ -1,7 +1,7 @@
-using collections.Enums;
-using collections.Models;
+using pizza.Enums;
+using pizza.Models;
 
-namespace collections.ViewModels.Users {
+namespace pizza.ViewModels.Users {
     public class IndexViewModels {
         public IEnumerable<User> users;
         public string orderBy;

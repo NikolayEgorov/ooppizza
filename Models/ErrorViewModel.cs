@@ -1,4 +1,4 @@
-namespace collections.Models;
+namespace pizza.Models;
 
 public class ErrorViewModel
 {

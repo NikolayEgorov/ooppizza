@@ -3,7 +3,7 @@
 echo "Compiling assets..."
 
 PROJECTS_PATH="/home/mykola/dotNetProjects"
-PROJECT_NAME="collections"
+PROJECT_NAME="pizza"
 
 npm install $PROJECTS_PATH/$PROJECT_NAME
 npm install --global gulp-cli

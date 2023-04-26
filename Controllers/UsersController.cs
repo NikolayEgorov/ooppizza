@@ -1,11 +1,11 @@
-using collections.Enums;
-using collections.Models;
-using collections.Interfaces;
+using pizza.Enums;
+using pizza.Models;
+using pizza.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using collections.ViewModels.Users;
+using pizza.ViewModels.Users;
 
-namespace collections.Controllers {
+namespace pizza.Controllers {
     public class UsersController : Controller
     {
         private readonly IUsers _users;
