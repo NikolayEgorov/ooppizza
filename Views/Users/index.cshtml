@@ -1,5 +1,5 @@
-@using collections.Enums;
-@using collections.ViewModels.Users;
+@using pizza.Enums;
+@using pizza.ViewModels.Users;
 @model IndexViewModels;
 
 @{
@@ -72,7 +72,7 @@
     </thead>
 
     <tbody>
-        @foreach(collections.Models.User user in Model.users) {
+        @foreach(pizza.Models.User user in Model.users) {
             <tr>
                 <td>@user.id</td>
                 <td>@user.name</td>

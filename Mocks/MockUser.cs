@@ -1,10 +1,10 @@
 using System.Text;
 using System.Text.Json;
-using collections.Models;
-using collections.Enums;
-using collections.Interfaces;
+using pizza.Models;
+using pizza.Enums;
+using pizza.Interfaces;
 
-namespace collections.Mocks {
+namespace pizza.Mocks {
     public class MockUsers : IUsers
     {
         private string _path;
