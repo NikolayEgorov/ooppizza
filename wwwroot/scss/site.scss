@@ -1,0 +1,39 @@
+$base-color:#f7f7fa;
+$article-font-size:13px;
+$font:Verdana;
+ 
+body {
+    font-family:$font;
+    background-color:$base-color;
+}
+
+#layout-container {
+    margin: 1.1em;
+}
+.users-index {
+    table {
+        margin-top: 1.5em;
+
+        &>thead {
+            &>tr {
+                &>th {
+                    &.id {
+                        width: 15%;
+                    }
+                    &.name {
+                        width: 25%;
+                    }
+                    &.surname {
+                        width: 25%;
+                    }
+                    &.age {
+                        width: 15%;
+                    }
+                    &.actions {
+                        width: 20%;
+                    }
+                }
+            }
+        }
+    }
+}

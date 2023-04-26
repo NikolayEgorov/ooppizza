@@ -1,0 +1,89 @@
+@using collections.Enums;
+@using collections.ViewModels.Users;
+@model IndexViewModels;
+
+@{
+    Layout = "_Layout";
+    ViewData["layoutContainerClass"] = "users-index";
+}
+
+<div class="row mt-5 mb-5">
+    <div class="col-md-3">
+        <a class="btn btn-sm btn-success" href="/users/create">Додати</a>
+        @* <a class="btn btn-sm btn-success" href="@Url.Action()">Додати</a> *@
+    </div>
+</div>
+
+<div class="row mt-5 mb-5">
+    <div class="col-md-3">
+        <select id="order-select" class="form-select" onchange="location.href = '/users/index?orderBy=' + document.getElementById('order-by-select').value + '&order=' + this.value">
+            @if(String.Equals(Model.order, SortingEnum.ASC)) {
+                <option value="@SortingEnum.ASC" selected>Сортувати спочатку</option>
+            } else {
+                <option value="@SortingEnum.ASC">Сортувати спочатку</option>
+            }
+
+            @if(String.Equals(Model.order, SortingEnum.DESC)) {
+                <option selected value="@SortingEnum.DESC">Сортувати з кінця</option>
+            } else {
+                <option value="@SortingEnum.DESC">Сортувати з кінця</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select id="order-by-select" class="form-select" onchange="location.href = '/users/index?orderBy=' + this.value + '&order=' + document.getElementById('order-select').value">
+            @if(String.Equals(Model.orderBy, "id")) {
+                <option value="id" selected>Сортувати по Id</option>
+            } else {
+                <option value="id">Сортувати по Id</option>
+            }
+
+            @if(String.Equals(Model.orderBy, "age")) {
+                <option value="age" selected>Сортувати по віку</option>
+            } else {
+                <option value="age">Сортувати по віку</option>
+            }
+
+            @if(String.Equals(Model.orderBy, "name")) {
+                <option selected value="name">Сортувати по ім'ю</option>
+            } else {
+                <option value="name">Сортувати по ім'ю</option>
+            }
+
+            @if(String.Equals(Model.orderBy, "surname")) {
+                <option selected value="surname">Сортувати по прізвищу</option>
+            } else {
+                <option value="surname">Сортувати по прізвищу</option>
+            }
+        </select>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="id">#</th>
+            <th class="name">Ім'я</th>
+            <th class="username">Прізвище</th>
+            <th class="age">Вік</th>
+            <th class="actions"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(collections.Models.User user in Model.users) {
+            <tr>
+                <td>@user.id</td>
+                <td>@user.name</td>
+                <td>@user.surname</td>
+                <td>@user.age</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="/users/update/@user.id">Редагувати</a>
+                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.getElementById('delete-form-@user.id').submit()">Видалити</a>
+                    <form id="delete-form-@user.id" method="post" action="/users/delete/@user.id"></form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
