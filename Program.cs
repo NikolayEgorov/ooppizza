@@ -1,5 +1,6 @@
-using pizza.Interfaces;
+using pizza;
 using pizza.Mocks;
+using pizza.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IUsers, MockUsers>();
+builder.Services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
 
 var app = builder.Build();
-app.UsePathBase("/home/mykola/dotNetProjects/oizza");
+app.UsePathBase("/home/mykola/dotNetProjects/pizza");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

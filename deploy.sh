@@ -14,7 +14,7 @@ do
     esac
 done
 
-echo 'updating project...'
+echo 'Updating project...'
 
 ssh -F ~/.ssh/config vm rm -rf $PROJECTS_PATH/$PROJECT_NAME/*
 scp -F ~/.ssh/config -r $PROJECTS_PATH/$PROJECT_NAME/* vm:$PROJECTS_PATH/$PROJECT_NAME/
