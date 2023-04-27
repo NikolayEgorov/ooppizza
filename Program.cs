@@ -1,17 +1,23 @@
 using pizza;
-using pizza.Mocks;
 using pizza.Interfaces;
+using pizza.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IUsers, MockUsers>();
-builder.Services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
+Console.WriteLine(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddDbContext<DatabaseContext>(
+    options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddTransient<IItems, ItemRepository>();
+builder.Services.AddTransient<IUsers, UserRepository>();
+builder.Services.AddTransient<IOrders, OrderRepository>();
+builder.Services.AddTransient<IProducts, ProductRepository>();
 
 var app = builder.Build();
-app.UsePathBase("/home/mykola/dotNetProjects/pizza");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -20,6 +26,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UsePathBase(app.Environment.ContentRootPath);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

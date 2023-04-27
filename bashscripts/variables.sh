@@ -1,4 +1,7 @@
 #!/bin/bash
 
-# export PROJECTS_PATH="/home/mykola/pizza"
-# export PROJECT_NAME="collections"
+PROJECTS_PATH="/home/mykola/dotNetProjects"
+PROJECT_NAME="pizza"
+
+echo $PROJECTS_PATH
+echo $PROJECT_NAME

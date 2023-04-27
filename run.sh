@@ -1,22 +1,23 @@
 #!/bin/bash
 
-PROJECTS_PATH="";
-PROJECT_NAME="";
-WITH_BUILD=0;
+BASH_SCRIPT_PATH=$(pwd)/bashscripts
 
-while getopts p:n:c: flag
+source $BASH_SCRIPT_PATH/variables.sh
+
+RUN_MODE=0;
+
+while getopts m: flag
 do
     case "${flag}" in
-        p) PROJECTS_PATH=${OPTARG};;
-        n) PROJECT_NAME=${OPTARG};;
-        c) WITH_BUILD=${OPTARG};;
+        m) RUN_MODE=${OPTARG};;
     esac
 done
 
-if [ "$WITH_BUILD" -eq 1 ]
+cd $BASH_SCRIPT_PATH
+if [ "$RUN_MODE" -eq 0 ]
 then
-    source $PROJECTS_PATH/$PROJECT_NAME/bashscripts/build.sh
+    source $BASH_SCRIPT_PATH/run.sh
+elif [ "$RUN_MODE" -eq 1 ]
+then
+    source $BASH_SCRIPT_PATH/deploy.sh
 fi
-
-cd $PROJECTS_PATH/$PROJECT_NAME
-dotnet run

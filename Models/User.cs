@@ -1,8 +1,11 @@
-namespace pizza.Models {
-    public class User {
-        public int id { get; set; }
+namespace pizza.Models
+{
+    public class User : Base
+    {
         public string name { get; set; }
         public string surname { get; set; }
-        public int age { get; set; }
+        public List<Order> orders { get; set; }
+
+        public User(int id) : base(id) {}
     }
 }
