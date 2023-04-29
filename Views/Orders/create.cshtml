@@ -18,6 +18,15 @@
             <input type="hidden" name="id" value="0">
 
             <div class="mb-3">
+                <label for="itemids" class="form-label">Піци</label>
+                <select id="itemids" class="form-select" name="itemids" multiple>
+                    @foreach(Item item in @Model.items){
+                        <option value="@item.id">@item.title</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="userid" class="form-label">Клієнт</label>
                 <select id="userid" class="form-select" name="userid">
                     @foreach(User user in @Model.users){
@@ -37,7 +46,7 @@
 
     <script>
         $(document).ready(() => {
-            $("#products").select2();
+            $("#itemids").select2();
         });
     </script>
 }

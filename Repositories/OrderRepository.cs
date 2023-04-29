@@ -14,19 +14,13 @@ namespace pizza.Repositories
         }
 
         public Order GetLast() => (Order) this.dbContext.Order
-            .OrderByDescending(o => o.id).Include(o => o.user)
-                // .Include(o => o.items)
-                .First();
+            .OrderByDescending(o => o.id).Include(o => o.user).Include(o => o.items).First();
 
         public Order GetById(int id) => (Order) this.dbContext.Order
-            .Where(o => o.id == id).Include(o => o.user)
-            // .Include(o => o.items)
-                .First();
+            .Where(o => o.id == id).Include(o => o.user).Include(o => o.items).First();
 
         public List<Order> All => this.dbContext.Order
-            .Include(o => o.user)
-            // .Include(o => o.items)
-                .ToList();
+            .Include(o => o.user).Include(o => o.items).ToList();
         
         public Order SaveOne(Order order)
         {
@@ -46,14 +40,14 @@ namespace pizza.Repositories
             return dbOrder;
         }
 
-        public bool SaveUser(Order order)
+        public bool SaveItems(Order order)
         {
-            
+            int totalPrice = order.items.Sum(i => i.price);
 
             Order dbOrder = this.GetById(order.id);
-            dbOrder.user = this.dbContext.User
-                .Where(u => u.id == order.user.id).First();
-            
+            dbOrder.items.AddRange(order.items);
+
+            dbOrder.totalPrice = totalPrice;
             return this.dbContext.SaveChanges() > 0;
         }
 
