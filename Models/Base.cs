@@ -5,10 +5,5 @@ namespace pizza.Models
         public int id { get; set; } = 0;
 
         public Base() {}
-
-        public Base(int id)
-        {
-            this.id = id;
-        }
     }
 }

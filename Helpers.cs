@@ -1,25 +1,31 @@
 using System.Collections;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 
 namespace pizza
 {
     public static class Helpers
     {
+        public static KeyValuePair<string, StringValues> GetFormData(IFormCollection data, string key)
+        {
+            foreach(KeyValuePair<string, StringValues> datum in data.ToList()) {
+                if(datum.Key.Equals(key)) {
+                    return datum;
+                }
+            }
+
+            return new KeyValuePair<string, StringValues>(key, "");
+        }
+
         public static List<string> ParseMultipleSelectValue(IFormCollection data, string key)
         {
+            string? value = GetFormData(data, key).Value;
+            
             List<string> values = new List<string>();
-
-            foreach(KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues> datum in data.ToList()) {
-                if(datum.Key.Equals(key)) {
-                    string value = datum.Value;
-
-                    if(value.Length == 0) return values;
-                    foreach(string val in value.Split(",")) {
-                        values.Add(val);
-                    }
-
-                    break;
-                }
+            if(value == null || value.Length == 0) return values;
+            
+            foreach(string val in value.Split(",")) {
+                values.Add(val);
             }
 
             return values;

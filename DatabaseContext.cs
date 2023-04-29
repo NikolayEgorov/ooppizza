@@ -17,6 +17,9 @@ namespace pizza
         {
             modelBuilder.Entity<Item>().HasMany(i => i.products)
                 .WithMany(p => p.items).UsingEntity<ItemProduct>();
+
+            modelBuilder.Entity<Order>().HasMany(o => o.items)
+                .WithMany(i => i.orders).UsingEntity<OrderItem>();
         }
     }
 }

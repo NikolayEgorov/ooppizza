@@ -28,7 +28,7 @@ namespace pizza.Controllers {
         public IActionResult create()
         {
             List<Product> products = this._iproducts.All;
-            return View(new UpdateViewModels(new Item(0), products));
+            return View(new UpdateViewModels(new Item(), products));
         }
 
         [HttpGet]
@@ -45,22 +45,22 @@ namespace pizza.Controllers {
         [Route("/items/update")]
         public RedirectResult update(Item item, List<Product> products)
         {
+            item = this._items.SaveOne(item);
+
             foreach (string productId in Helpers.ParseMultipleSelectValue(Request.Form, "products")) {
                 products.Add(this._iproducts.GetById(Int32.Parse(productId)));
             }
-
             item.products = products;
-            item = this._items.SaveOne(item);
 
             this._items.SaveProducts(item);
-            return Redirect("/items/update/" + item.id);
+            return Redirect("/items/index");
         }
 
         [HttpPost]
         [Route("/items/delete/{id:int}")]
         public ActionResult delete(int id)
         {
-            _items.RemoveById(id);
+            this._items.RemoveById(id);
             return Redirect("/items/index");
         }
     }

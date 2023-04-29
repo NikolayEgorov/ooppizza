@@ -14,7 +14,7 @@ namespace pizza.Repositories
         }
 
         public Item GetLast() => this.dbContext.Item.OrderByDescending(i => i.id)
-            .Include(i => i.products).Last();
+            .Include(i => i.products).First();
         public Item GetById(int id) => this.dbContext.Item
             .Include(i => i.products).Where(i => i.id == id).First();
         public List<Item> All => this.dbContext.Item
@@ -31,32 +31,20 @@ namespace pizza.Repositories
             } else this.dbContext.Item.Add(item);
 
             this.dbContext.SaveChanges();
-            return this.GetLast();
+            return item.id > 0 ? item : this.GetLast();
         }
 
         public bool RemoveById(int id)
         {
-            this.dbContext.Item.Remove(new Item(id));
+            this.dbContext.Item.Remove(new Item());
             return this.dbContext.SaveChanges() > 0;
         }
 
         public bool SaveProducts(Item item)
         {
             Item dbItem = this.GetById(item.id);
-
-            List<Product> dbProducts = dbItem.products;
-            foreach(Product product in dbProducts) {
-                if(! (item.products.Contains(product))) {
-                    dbItem.products.Remove(product);
-                }
-            }
-
-            foreach(Product product in item.products) {
-                if(! (dbItem.products.Contains(product))) {
-                    dbItem.products.Add(product);
-                }
-            }
-
+            dbItem.products.AddRange(item.products);
+            
             return this.dbContext.SaveChanges() > 0;
         }
     }
