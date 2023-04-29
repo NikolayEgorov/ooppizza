@@ -1,0 +1,27 @@
+body {
+  font-family: Verdana;
+  background-color: #f7f7fa;
+}
+
+#layout-container {
+  margin: 1.1em;
+}
+
+.users-index table {
+  margin-top: 1.5em;
+}
+.users-index table > thead > tr > th.id {
+  width: 15%;
+}
+.users-index table > thead > tr > th.name {
+  width: 25%;
+}
+.users-index table > thead > tr > th.surname {
+  width: 25%;
+}
+.users-index table > thead > tr > th.age {
+  width: 15%;
+}
+.users-index table > thead > tr > th.actions {
+  width: 20%;
+}

@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "pizza",
+            "database": "${workspaceFolder:pizza}/pizza.sqlite3"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

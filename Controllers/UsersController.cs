@@ -24,8 +24,7 @@ namespace pizza.Controllers {
             string order = HttpContext.Request.Query["order"];
             if(order == null) order = SortingEnum.ASC;
 
-            IndexViewModels viewModels = new IndexViewModels(
-                _users.AllOrdered(orderBy, order), orderBy, order);
+            IndexViewModels viewModels = new IndexViewModels((List<User>)_users.All);
 
             return View(viewModels);
         }
@@ -40,9 +39,7 @@ namespace pizza.Controllers {
         [Route("/users/update/{id:int}")]
         public IActionResult update(int id)
         {
-            List<User> users = new List<User>(_users.All);
-            User user = users.Find(x => x.id == id);
-
+            User user = (User) this._users.GetById(id);
             return View(new UpdateViewModels(user));
         }
 
@@ -50,10 +47,7 @@ namespace pizza.Controllers {
         [Route("/users/update")]
         public RedirectResult update(User user)
         {
-            HashSet<User> users = new HashSet<User>(_users.All);
-            users.Add(user);
-
-            _users.All = users;
+            user = (User) this._users.SaveOne(user);
             return Redirect("/users/update/" + user.id);
         }
 
