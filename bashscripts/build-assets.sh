@@ -1,14 +1,18 @@
 #!/bin/bash
 
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 echo "<<<<<<<<<<<<<<<<<<Compiling assets>>>>>>>>>>>>>>>>>>>>>>"
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
-source $(pwd)/variables.sh
+source $BASH_SCRIPT_PATH/variables.sh
 
-FULL_PATH=$PROJECTS_PATH/$PROJECT_NAME
-
-npm install $FULL_PATH
+npm install $PROJECT_FULL_PATH
 npm install --global gulp-cli
 
-gulp --gulpfile=$FULL_PATH/gulpfile.js compile
+gulp --gulpfile=$PROJECT_FULL_PATH/gulpfile.js compile
 
-rm -rf $FULL_PATH/node_modules
+rm -rf $PROJECT_FULL_PATH/node_modules

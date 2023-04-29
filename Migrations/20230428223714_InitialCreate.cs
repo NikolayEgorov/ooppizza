@@ -63,6 +63,7 @@ namespace collections.Migrations
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     title = table.Column<string>(type: "TEXT", nullable: false),
+                    price = table.Column<int>(type: "INTEGER", nullable: false),
                     Orderid = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -79,21 +80,23 @@ namespace collections.Migrations
                 name: "ItemProduct",
                 columns: table => new
                 {
-                    itemsid = table.Column<int>(type: "INTEGER", nullable: false),
-                    productsid = table.Column<int>(type: "INTEGER", nullable: false)
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    itemid = table.Column<int>(type: "INTEGER", nullable: false),
+                    productid = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemProduct", x => new { x.itemsid, x.productsid });
+                    table.PrimaryKey("PK_ItemProduct", x => x.id);
                     table.ForeignKey(
-                        name: "FK_ItemProduct_Item_itemsid",
-                        column: x => x.itemsid,
+                        name: "FK_ItemProduct_Item_itemid",
+                        column: x => x.itemid,
                         principalTable: "Item",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ItemProduct_Product_productsid",
-                        column: x => x.productsid,
+                        name: "FK_ItemProduct_Product_productid",
+                        column: x => x.productid,
                         principalTable: "Product",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -105,9 +108,14 @@ namespace collections.Migrations
                 column: "Orderid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemProduct_productsid",
+                name: "IX_ItemProduct_itemid",
                 table: "ItemProduct",
-                column: "productsid");
+                column: "itemid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemProduct_productid",
+                table: "ItemProduct",
+                column: "productid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_userid",

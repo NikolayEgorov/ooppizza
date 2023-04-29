@@ -3,51 +3,57 @@ using pizza.Models;
 using pizza.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using pizza.ViewModels.Users;
+using pizza.ViewModels.Items;
 
 namespace pizza.Controllers {
     public class ItemsController : Controller
     {
         private readonly IItems _items;
+        private readonly IProducts _iproducts;
 
-        public ItemsController(IItems items)
+        public ItemsController(IItems items, IProducts products)
         {
-            _items = items;
+            this._items = items;
+            this._iproducts = products;
         }
 
         [Route("/items/index")]
         public IActionResult index()
         {
-            string orderBy = HttpContext.Request.Query["orderBy"];
-            if(orderBy == null) orderBy = "id";
-
-            string order = HttpContext.Request.Query["order"];
-            if(order == null) order = SortingEnum.ASC;
-
-            IndexViewModels viewModels = new IndexViewModels((List<User>)_items.All);
+            IndexViewModels viewModels = new IndexViewModels(_items.All);
             return View(viewModels);
         }
 
         [Route("/items/create")]
         public IActionResult create()
         {
-            return View();
+            List<Product> products = this._iproducts.All;
+            return View(new UpdateViewModels(new Item(0), products));
         }
 
         [HttpGet]
         [Route("/items/update/{id:int}")]
         public IActionResult update(int id)
         {
-            User user = (User) this._items.GetById(id);
-            return View(new UpdateViewModels(user));
+            Item item = this._items.GetById(id);
+            List<Product> products = this._iproducts.All;
+
+            return View(new UpdateViewModels(item, products));
         }
 
         [HttpPost]
         [Route("/items/update")]
-        public RedirectResult update(User user)
+        public RedirectResult update(Item item, List<Product> products)
         {
-            user = (User) this._items.SaveOne(user);
-            return Redirect("/users/update/" + user.id);
+            foreach (string productId in Helpers.ParseMultipleSelectValue(Request.Form, "products")) {
+                products.Add(this._iproducts.GetById(Int32.Parse(productId)));
+            }
+
+            item.products = products;
+            item = this._items.SaveOne(item);
+
+            this._items.SaveProducts(item);
+            return Redirect("/items/update/" + item.id);
         }
 
         [HttpPost]
@@ -55,7 +61,7 @@ namespace pizza.Controllers {
         public ActionResult delete(int id)
         {
             _items.RemoveById(id);
-            return Redirect("/users/index");
+            return Redirect("/items/index");
         }
     }
 }

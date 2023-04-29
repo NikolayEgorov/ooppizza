@@ -1,3 +1,4 @@
+@using pizza.Models;
 @using pizza.ViewModels.Items;
 @model UpdateViewModels;
 
@@ -7,29 +8,42 @@
 
 <div class="row mt-5 mb-5">
     <div class="col-md-3">
-        <a class="btn btn-sm btn-success" href="/item/create">Додати</a>
-        <a class="btn btn-sm btn-primary" href="/item/index">На головну</a>
+        <a class="btn btn-sm btn-success" href="/items/create">Додати</a>
+        <a class="btn btn-sm btn-primary" href="/items/index">На головну</a>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-6">
-        <h1>Користувач: @Model.item.title</h1>
+        <h1>Піцца: @Model.item.title</h1>
 
-        <form action="/users/update" method="post">
+        <form action="/items/update" method="post">
             <input type="hidden" name="id" value="@Model.item.id">
 
             <div class="mb-3">
-                <label for="name" class="form-label">Ім'я</label>
-                <input type="text" class="form-control" id="name" name="name" value="@Model.item.title">
+                <label for="title" class="form-label">Назва</label>
+                <input type="text" class="form-control" id="title" name="title" value="@Model.item.title">
             </div>
 
             <div class="mb-3">
-                <label for="surname" class="form-label">Прізвище</label>
-                <input type="number" step="10" class="form-control" id="price" name="price" value="@Model.item.price">
+                <label for="price" class="form-label">Вартість</label>
+                <input type="number" class="form-control" id="price" name="price" value="@Model.item.price">
             </div>
 
-            <button type="submit" class="btn btn-primary">Створити</button>
+            <div class="mb-3">
+                <label for="products" class="form-label">Інгрідієнти</label>
+                <select id="products" class="form-select" name="products" multiple>
+                    @foreach(Product product in @Model.products){
+                        @if(Model.item.products.Contains(product)){
+                            <option value="@product.id" selected>@product.title</option>    
+                        } else {
+                            <option value="@product.id">@product.title</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Оновити</button>
         </form>
     </div>
 </div>

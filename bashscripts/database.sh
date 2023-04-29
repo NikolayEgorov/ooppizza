@@ -1,18 +1,31 @@
 #!/bin/bash
 
-echo "<<<<<<<<<<<<<<<<<<<Database Init>>>>>>>>>>>>>>>>>>>"
+source $BASH_SCRIPT_PATH/variables.sh
 
+if [ "$DATABASE_REINIT" -eq 1 ]
+then
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<Database Inint>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
-source $(pwd)/variables.sh
+    rm -rf "$PROJECT_FULL_PATH"/database
 
-PROJECT_FULL_PATH=$PROJECTS_PATH/$PROJECT_NAME
+    mkdir "$PROJECT_FULL_PATH"/database
+    touch "$PROJECT_FULL_PATH"/database/"$PROJECT_NAME".sqlite3
+    chmod 777 -R "$PROJECT_FULL_PATH"/database
 
-cd $PROJECT_FULL_PATH
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<Create Database>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
-touch "$PROJECT_FULL_PATH"/database/"$PROJECT_NAME".sqlite3
-chmod 777 "$PROJECT_FULL_PATH"/database/"$PROJECT_NAME".sqlite3 
-
-echo "<<<<<<<<<<<<<<<<<<<Create Database>>>>>>>>>>>>>>>>>>>>"
-
-dotnet add package Microsoft.EntityFrameworkCore.Design
-dotnet ef database update
+    cd $PROJECT_FULL_PATH
+    dotnet ef database update
+fi

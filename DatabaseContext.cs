@@ -11,5 +11,12 @@ namespace pizza
         public DbSet<Order> Order { get; set; }
         public DbSet<Item> Item { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<ItemProduct> ItemProduct { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Item>().HasMany(i => i.products)
+                .WithMany(p => p.items).UsingEntity<ItemProduct>();
+        }
     }
 }

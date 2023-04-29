@@ -10,6 +10,27 @@ body {
 #layout-container {
     margin: 1.1em;
 }
+.products-index {
+    table {
+        margin-top: 1.5em;
+
+        &>thead {
+            &>tr {
+                &>th {
+                    &.id {
+                        width: 15%;
+                    }
+                    &.title {
+                        width: 65%;
+                    }
+                    &.actions {
+                        width: 20%;
+                    }
+                }
+            }
+        }
+    }
+}
 .users-index {
     table {
         margin-top: 1.5em;

@@ -1,7 +1,10 @@
 #!/bin/bash
 
-PROJECTS_PATH="/home/mykola/dotNetProjects"
-PROJECT_NAME="pizza"
+export PROJECTS_PATH="/home/mykola/dotNetProjects"
+export PROJECT_NAME="pizza"
 
-echo $PROJECTS_PATH
-echo $PROJECT_NAME
+export PROJECT_FULL_PATH=$PROJECTS_PATH/$PROJECT_NAME
+
+export BASH_SCRIPT_PATH=$PROJECT_FULL_PATH/bashscripts
+
+export DATABASE_REINIT=0

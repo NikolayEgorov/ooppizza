@@ -2,9 +2,11 @@ namespace pizza.Models
 {
     public class Product : Base
     {
-        public Product(int id) : base(id) {}
+        public string title { get; set; } = String.Empty;
+        public List<ItemProduct> itemProducts { get; set; } = new List<ItemProduct>();
+        public List<Item> items { get; set; } = new List<Item>();
 
-        public string title { get; set; }
-        public List<Item> items { get; set; }
+        public Product() {}
+        public Product(int id) : base(id) {}
     }
 }

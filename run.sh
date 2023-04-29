@@ -1,8 +1,6 @@
 #!/bin/bash
 
-BASH_SCRIPT_PATH=$(pwd)/bashscripts
-
-source $BASH_SCRIPT_PATH/variables.sh
+source $(pwd)/bashscripts/variables.sh
 
 RUN_MODE=0;
 
@@ -13,7 +11,7 @@ do
     esac
 done
 
-cd $BASH_SCRIPT_PATH
+cd $PROJECT_FULL_PATH
 if [ "$RUN_MODE" -eq 0 ]
 then
     source $BASH_SCRIPT_PATH/run.sh

@@ -4,18 +4,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace pizza.Repositories
 {
-    public class OrderRepository : BaseRepository, IOrders
+    public class OrderRepository : IOrders
     {
-        public OrderRepository(DatabaseContext dbContext) : base(dbContext) {}
+        protected readonly DatabaseContext dbContext;
+        
+        public OrderRepository(DatabaseContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
 
-        public override Order GetLast() => (Order) this.dbContext.Order.OrderByDescending(o => o.id).Last();
-        public override Order GetById(int id) => (Order) this.dbContext.Order.Where(o => o.id == id).First();
+        public Order GetLast() => (Order) this.dbContext.Order.OrderByDescending(o => o.id).Last();
+        public Order GetById(int id) => (Order) this.dbContext.Order.Where(o => o.id == id).First();
+        public List<Order> All => this.dbContext.Order.ToList();
+        
+        public Order SaveOne(Order model)
+        {
+            throw new NotImplementedException();
+        }
 
-        public override bool RemoveById(int id) {
+        public bool RemoveById(int id) {
             this.dbContext.Order.Remove(new Order(id));
             return this.dbContext.SaveChanges() > 0;
         }
-
-        public override IEnumerable<Order> All => (List<Order>) this.dbContext.Order.Where(o => o.id > 0);
     }
 }

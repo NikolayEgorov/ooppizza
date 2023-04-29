@@ -3,12 +3,12 @@
 
 @{
     Layout = "_Layout";
-    ViewData["layoutContainerClass"] = "users-index";
+    ViewData["layoutContainerClass"] = "items-index";
 }
 
 <div class="row mt-5 mb-5">
     <div class="col-md-3">
-        <a class="btn btn-sm btn-success" href="/users/create">Нова піца</a>
+        <a class="btn btn-sm btn-success" href="/items/create">Нова</a>
     </div>
 </div>
 
@@ -16,25 +16,24 @@
     <thead>
         <tr>
             <th class="id">#</th>
-            <th class="name">Ім'я</th>
-            <th class="username">Прізвище</th>
-            <th class="age">Вік</th>
+            <th class="name">Назва</th>
+            <th class="username">Вартість</th>
             <th class="actions"></th>
         </tr>
     </thead>
 
     <tbody>
-        @* @foreach(pizza.Models.User user in Model.users) {
+        @foreach(pizza.Models.Item item in Model.items) {
             <tr>
-                <td>@user.id</td>
-                <td>@user.name</td>
-                <td>@user.surname</td>
+                <td>@item.id</td>
+                <td>@item.title</td>
+                <td>@item.price</td>
                 <td>
-                    <a class="btn btn-sm btn-primary" href="/users/update/@user.id">Редагувати</a>
-                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.getElementById('delete-form-@user.id').submit()">Видалити</a>
-                    <form id="delete-form-@user.id" method="post" action="/users/delete/@user.id"></form>
+                    <a class="btn btn-sm btn-primary" href="/items/update/@item.id">Редагувати</a>
+                    <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.getElementById('delete-form-@item.id').submit()">Видалити</a>
+                    <form id="delete-form-@item.id" method="post" action="/items/delete/@item.id"></form>
                 </td>
             </tr>
-        } *@
+        }
     </tbody>
 </table>

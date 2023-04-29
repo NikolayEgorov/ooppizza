@@ -12,14 +12,12 @@ echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
-source $(pwd)/variables.sh
+source $BASH_SCRIPT_PATH/variables.sh
 
 eval `ssh-agent -s`
 ssh-add ~/.ssh/id_ed25519
 
-FULL_PATH=$PROJECTS_PATH/$PROJECT_NAME
-
-ssh -F ~/.ssh/config vm rm -rf $FULL_PATH/*
-scp -F ~/.ssh/config -r $FULL_PATH/* vm:$FULL_PATH/
+ssh -F ~/.ssh/config vm rm -rf $PROJECT_FULL_PATH/*
+scp -F ~/.ssh/config -r $PROJECT_FULL_PATH/* vm:$PROJECT_FULL_PATH/
 
 ssh-agent -k

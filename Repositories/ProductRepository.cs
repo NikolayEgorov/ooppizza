@@ -1,21 +1,43 @@
 using pizza.Models;
 using pizza.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace pizza.Repositories
 {
-    public class ProductRepository : BaseRepository, IProducts
+    public class ProductRepository : IProducts
     {
-        public ProductRepository(DatabaseContext dbContext) : base(dbContext) {}
-
-        public override Product GetLast() => (Product) this.dbContext.Product.OrderByDescending(p => p.id).Last();
-        public override Product GetById(int id) => (Product) this.dbContext.Product.Where(p => p.id == id).First();
-
-        public override bool RemoveById(int id) {
-            this.dbContext.Product.Remove(new Product(id));
-            return this.dbContext.SaveChanges() > 0;
+        protected readonly DatabaseContext dbContext;
+        
+        public ProductRepository(DatabaseContext dbContext)
+        {
+            this.dbContext = dbContext;
         }
 
-        public override IEnumerable<Product> All => (List<Product>) this.dbContext.Product.Where(p => p.id > 0);
+        public Product GetLast() => this.dbContext.Product.OrderByDescending(p => p.id).First();
+        public Product GetById(int id) => this.dbContext.Product.Where(p => p.id == id).First();
+        public List<Product> All => this.dbContext.Product.ToList();
+        
+        public Product SaveOne(Product product)
+        {   
+            Product dbProduct = null;
+
+            if(product.id > 0) dbProduct = this.GetById(product.id);
+            else dbProduct = new Product();
+
+            dbProduct.title = product.title;
+            
+            if(dbProduct.id == 0) this.dbContext.Add(dbProduct);
+            this.dbContext.SaveChanges();
+
+            return dbProduct;
+        }
+
+        public bool RemoveById(int id)
+        {
+            Product product = this.GetById(id);
+            this.dbContext.Product.Remove(product);
+            this.dbContext.SaveChanges();
+
+            return this.dbContext.SaveChanges() > 0;
+        }
     }
 }
